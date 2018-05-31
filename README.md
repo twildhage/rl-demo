@@ -5,9 +5,10 @@ Demonstration of reinforcement learning algorithms with selected OpenAI gym envi
 
 # Installation
 
-Simply run:
-
-    $ pip install rl_demo -e
+Simply run from within the rl-demo folder:
+    $ python setup.py sdist 
+    $ pip install -e ./
+ 
 
 # Uninstallation
 
