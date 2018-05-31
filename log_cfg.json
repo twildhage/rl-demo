@@ -1,0 +1,77 @@
+{
+    "version": 1,
+    "formatters":
+    {
+      "simple":
+      {
+      "format": "| %(asctime)s | %(levelname).4s | %(name).16s | %(message)s " 
+      },
+      "full":
+      {
+     "format": "| %(asctime)s | %(levelname).4s | %(name).16s | %(message)s "
+      }
+    },
+    "handlers":
+    {
+      "console":
+      {
+        "class": "logging.StreamHandler",
+        "level": "DEBUG",
+        "formatter": "simple",
+        "stream": "ext://sys.stdout"
+      }, 
+      "file_train":
+      {
+        "class": "logging.handlers.TimedRotatingFileHandler",
+        "formatter": "full",
+        "level": "INFO",
+        "filename": "./log/train.log",
+        "when": "midnight",
+        "backupCount": 2
+       },
+     "file_eval":
+      {
+        "class": "logging.handlers.TimedRotatingFileHandler",
+        "formatter": "full",
+        "level": "INFO",
+        "filename": "./log/eval.log",
+        "when": "midnight",
+        "backupCount": 2
+       }
+
+    },
+    "loggers":
+    {
+      "logger_train":
+      {
+        "level": "INFO",
+        "handlers": ["console"],
+        "propagate": 0
+      },
+    "logger_eval":
+      {
+        "level": "INFO",
+        "handlers": ["console"],
+        "propagate": 0
+      },
+    "logger_train_to_file":
+      {
+        "level": "INFO",
+        "handlers": ["console", "file_train"],
+        "propagate": 0
+      },
+    "logger_eval_to_file":
+      {
+        "level": "INFO",
+        "handlers": ["console", "file_eval"],
+        "propagate": 0
+      }
+
+
+    },
+    "root":
+    {
+        "level": "DEBUG",
+        "handlers": []
+    }
+}
