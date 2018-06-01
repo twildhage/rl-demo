@@ -25,7 +25,7 @@
         "class": "logging.handlers.TimedRotatingFileHandler",
         "formatter": "full",
         "level": "INFO",
-        "filename": "./log/train.log",
+        "filename": "../log/train.log",
         "when": "midnight",
         "backupCount": 2
        },
@@ -34,7 +34,7 @@
         "class": "logging.handlers.TimedRotatingFileHandler",
         "formatter": "full",
         "level": "INFO",
-        "filename": "./log/eval.log",
+        "filename": "../log/eval.log",
         "when": "midnight",
         "backupCount": 2
        }

@@ -3,7 +3,9 @@ Demonstration of reinforcement learning algorithms with selected OpenAI gym envi
 """
 from setuptools import find_packages, setup
 
-dependencies = ['argparse', 'json', 'logging', 'os', 'tensorflow']
+dependencies = ['argparse',
+                'gym',
+                'tensorflow']
 
 setup(
     name='rl_demo',

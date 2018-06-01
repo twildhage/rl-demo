@@ -6,3 +6,7 @@ build/
 
 .tox/
 .coverage
+
+*.json~
+
+\.cache/
