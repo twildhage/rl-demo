@@ -14,8 +14,8 @@ from threading import Thread
 # Third party modules 
 import gym
 
-# Custum modules
-from utils import get_Agent, get_agent
+# Custom modules
+from utils import get_Agent, get_agent, Logger
 
 
 class AbstractManager(ABC):
@@ -30,6 +30,8 @@ class AbstractManager(ABC):
         self._mode = mode 
         
         self._kwargs_agent = kwargs_agent
+        
+        self.log = Logger.get_active_logger()
 
     @abc.abstractmethod
     def run(self, num_episodes, num_timesteps):
@@ -39,3 +41,5 @@ class AbstractManager(ABC):
     def summary(self):
         pass
     
+    
+

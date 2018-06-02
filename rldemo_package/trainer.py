@@ -10,7 +10,7 @@ Created on Thu May 31 13:50:21 2018
 from abc import ABC
 import abc
 
-# Custum modules
+# Custom modules
 from runner import AbstractRunner
 from utils import get_agent 
 
@@ -23,16 +23,16 @@ class AbstractTrainer(AbstractRunner):
         
         super(AbstractTrainer, self).__init__(*args)
 
-    @abc.abstractmethod
-    def loss_op(self, target):
-        pass
-
-
-class BaseTrainer(AbstractTrainer):
-
-    def __init__(self, *args):
-        
-        super(AbstractTrainer, self).__init__(*args)
-
-    def loss_op(self, target):
-        pass
+#    @abc.abstractmethod
+#    def loss_op(self, target):
+#        pass
+#
+#
+#class BaseTrainer(AbstractTrainer):
+#
+#    def __init__(self, *args):
+#        
+#        super(AbstractTrainer, self).__init__(*args)
+#
+#    def loss_op(self, target):
+#        pass

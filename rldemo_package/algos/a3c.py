@@ -8,6 +8,7 @@ Created on Thu May 31 13:50:01 2018
 
 # Build-in modules
 from queue import Queue
+from threading import Thread
 
 # Third party modules 
 import gym
@@ -15,7 +16,7 @@ from tensorflow import keras
 import tensorflow as tf
 import tensorflow.contrib.eager as tfe
 
-# Custum modules
+# Custom modules
 from base_nets import DenseBaseNet, ConvBaseNet
 from manager import AbstractManager
 from runner import AbstractRunner
@@ -43,14 +44,13 @@ class Trainer(AbstractTrainer):
         
         self.Q_experience = Q_experience
 
+    def train(self, coord, num_episodes=199, num_timesteps=50):
+        for _ in range(num_episodes):
+            episode = self.Q_experience.get()
+            self.agent.train(episode)
+        coord.request_stop()
 
-    def loss_op(self, target):
-        pass
-
-    def run(self, num_episodes, num_timesteps):
-        pass
-
-    def thread(self):
+    def eval(self, coord=None, num_episodes=199, num_timesteps=50):
         pass
 
 
@@ -72,12 +72,20 @@ class Runner(AbstractRunner):
         
         self.Q_experience = Q_experience
 
+    def train(self, coord=None, num_episodes=199, num_timesteps=50):
+        return self.eval(coord, num_episodes, num_timesteps)
 
-    def run(self, num_episodes, num_timesteps):
-        pass
-
-    def thread(self):
-        pass
+    def eval(self, coord=None, num_episodes=199, num_timesteps=50):
+        
+        if coord:
+            
+            while not coord.should_stop():
+                episode = self.agent.eval(num_timesteps)
+                self.Q_experience.put(episode)
+        else:
+            
+            for _ in range(num_episodes):
+                self.agent.eval(num_timesteps)
 
 
 class Manager(AbstractManager):
@@ -103,10 +111,51 @@ class Manager(AbstractManager):
                                        self._algo,
                                        self._game,
                                        self._kwargs_agent))
+            
+        self.presenter = Runner(self.Q_experiences, 
+                                self.trainer.agent,
+                                self._algo,
+                                self._game,
+                                self._kwargs_agent)
 
 
     def run(self, num_episodes, num_timesteps):
-        pass
+        
+        coord = tf.train.Coordinator()
+        mode = self._mode
+        
+        if mode == 'train':
+            
+            # Get threads - the trainer stops all other threads after 'num_epiodes'
+            trainer_thread = self.trainer.thread(coord, mode, num_episodes=num_episodes)
+            
+            runner_threads = [runner.thread(coord, mode) for runner in self.runners]
+            
+            presenter_thread = self.presenter.thread(coord, mode)
+            
+            # Start threads
+            trainer_thread.start()
+            
+            for runner_thread in runner_threads:
+                runner_thread.start()
+            
+            presenter_thread.start()
+            
+            self.log.info('all threads started')
+            
+            # Join threads
+            trainer_thread.join()
+            
+            for runner_thread in runner_threads:
+                runner_thread.join()
+            
+            presenter_thread.join()
+            
+            self.log.info('all threads finished')
+            
+        elif mode == 'eval':
+            self.presenter.eval(num_episodes=1,
+                                num_timesteps=num_timesteps)
 
     def summary(self):
         pass
@@ -187,6 +236,9 @@ class RunnerAgent(keras.Model):
     def valuef_op(self, state):
         
         return self._valuef(state)
+    
+    def eval(self, num_timesteps):
+        pass
 
 
 class TrainerAgent(keras.Model):
@@ -216,4 +268,11 @@ class TrainerAgent(keras.Model):
             self._valuef = ValueFunction(self._BaseNet())
         
         self.share_weights = share_weights
+
+    def train(self, episode):
+        pass
+    
+    def loss_op(self, target):
+        pass
+
 

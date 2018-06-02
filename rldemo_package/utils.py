@@ -18,7 +18,7 @@ import pdb
 
 # Third party modules 
 
-# Custum modules
+# Custom modules
 
 
 def get_Agent(algo, name):
@@ -165,8 +165,53 @@ def get_logger(mode, log_to_file=False):
     return _logger
 
 
+class Logger:
+    """Get preconfigured logger for training and evaluation logs.
+    Args:
+        mode: ['train', 'eval'] The difference when chosing a mode is, that the
+                logging format differs for the different modes.
+        log_to_file: when False output to console only, when True also output 
+                to file that correspondes to the current mode.
+    """
+    
+    log_to_file = None
+    
+    mode = None
 
+    @classmethod
+    def get_logger(cls, mode, log_to_file=False):
+    
+        cls.mode = mode
+        
+        cls.log_to_file = log_to_file
+        
+        path_to_this_file = os.path.abspath(os.path.dirname(__file__))
+        
+        path = os.path.join(path_to_this_file, "../log_cfg.json")
+        
+        with open(path) as log_config_file:
+            log_config = json.loads(log_config_file.read())
+            
+        logging_config.dictConfig(log_config)
+        
+        logger_name = 'logger_'+mode if log_to_file==False else 'logger_'+mode+'_to_file' 
+        
+        _logger = logging.getLogger(logger_name)
+            
+        return _logger
 
+    @classmethod
+    def get_active_logger(cls):
+        
+        try:
+            logger = cls.get_logger(cls.mode, cls.log_to_file)
+        
+        except:
+            raise Exception("No active logger. First call 'get_logger' to activate logging.")
+        
+        else:
+            return logger
+            
 
 
 
