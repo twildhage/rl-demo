@@ -34,7 +34,7 @@ def main():
     args, log = init()
     
     kwargs_agent = {'tensorboard': args.tensorboard,
-                    'checkpointdir': args.checkpointdir, 
+                    'checkpoint_dir': args.checkpoint_dir, 
                     'share_weights': args.share_weights}
     
     Manager = get_Manager(args.algo)

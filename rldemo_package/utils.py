@@ -68,7 +68,7 @@ def get_argparser():
                         choices=['a3c', 'rainbow', 'unicorn'],
                         help='Reinforcement learning algorithm to be used.')
     
-    argparser.add_argument('--cptdir', default='./checkpoints', dest='checkpointdir',
+    argparser.add_argument('--cptdir', default='../../checkpoints', dest='checkpoint_dir',
                            metavar='CHECKPOINTDIR',
                         help='Set path of checkpoints.')
     
