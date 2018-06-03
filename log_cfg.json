@@ -37,7 +37,17 @@
         "filename": "../log/eval.log",
         "when": "midnight",
         "backupCount": 2
+       },
+    "file_run":
+      {
+        "class": "logging.handlers.TimedRotatingFileHandler",
+        "formatter": "full",
+        "level": "INFO",
+        "filename": "../log/run.log",
+        "when": "midnight",
+        "backupCount": 2
        }
+
 
     },
     "loggers":
@@ -54,6 +64,13 @@
         "handlers": ["console"],
         "propagate": 0
       },
+    "logger_run":
+      {
+        "level": "INFO",
+        "handlers": ["console"],
+        "propagate": 0
+      },
+
     "logger_train_to_file":
       {
         "level": "INFO",
@@ -65,9 +82,13 @@
         "level": "INFO",
         "handlers": ["console", "file_eval"],
         "propagate": 0
+      },
+    "logger_run_to_file":
+      {
+        "level": "INFO",
+        "handlers": ["console", "file_run"],
+        "propagate": 0
       }
-
-
     },
     "root":
     {

@@ -10,7 +10,7 @@ import tensorflow as tf
 from tensorflow import keras
 
 class ConvBaseNet(keras.Model):
-    def __init__(self, name="base_net"):
+    def __init__(self, input_shape, name="base_net"):
         """Base net that is shared by the policy and the value function
         Args:
           policy: 
@@ -21,19 +21,17 @@ class ConvBaseNet(keras.Model):
         self.dense2 = tf.layers.Dense(1)
         self.dense3 = tf.layers.Dense(1)
         self.dense4 = tf.layers.Dense(1)
-        self.dense5 = self.dense1
 
     def call(self, input):
         out = self.dense1(input)
         out = self.dense2(out)
         out = self.dense3(out)
         out = self.dense4(out)
-        out = self.dense5(out)
         return out
 
 
 class DenseBaseNet(keras.Model):
-    def __init__(self, name="base_net"):
+    def __init__(self, input_shape, name="base_net"):
         """Base net that is shared by the policy and the value function
         Args:
           policy: 
@@ -44,12 +42,11 @@ class DenseBaseNet(keras.Model):
         self.dense2 = tf.layers.Dense(1)
         self.dense3 = tf.layers.Dense(1)
         self.dense4 = tf.layers.Dense(1)
-        self.dense5 = self.dense1
+
 
     def call(self, input):
         out = self.dense1(input)
         out = self.dense2(out)
         out = self.dense3(out)
         out = self.dense4(out)
-        out = self.dense5(out)
         return out

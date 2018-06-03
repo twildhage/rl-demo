@@ -20,7 +20,6 @@ import pdb
 
 # Custom modules
 
-
 def get_Agent(algo, name):
     
     module_name = "algos.{algo}".format(algo=algo)
@@ -56,9 +55,14 @@ def get_manager(algo, kwargs_manager):
 
 
 def get_argparser():
+    
+    
     argparser = argparse.ArgumentParser(description='Demonstration of reinforcement\
                         learning algorithms with selected OpenAI gym environments.')
-    
+
+#    argparser.add_argument('--discount_factor', '-df', type=float, default=config.discount_factor, 
+#                        action=config(argparser, 'discount_factor', []),
+#                        help='Reinforcement learning algorithm to be used.')
     
     argparser.add_argument('--algo', '-a', type=str, default='a3c', 
                         choices=['a3c', 'rainbow', 'unicorn'],
@@ -78,7 +82,10 @@ def get_argparser():
                         more than the given number of episodes.')
     
     argparser.add_argument('--game', '-g', default='Pendulum-v0',
-                           choices=['Pendulum-v0', 'SpaceInvaders', 'HillCar'],
+                           choices=['Pendulum-v0',
+                                    'Asterix-ram-v0',
+                                    'CartPole-v0',
+                                    'CrazyClimber-ram-v0'],
                         help='Game to be used (correspondes to OpenAI gym environment).\
                         Only a small selection of games are available in this demo.')
     
@@ -86,7 +93,7 @@ def get_argparser():
                         help='Activate logging to file in dir /logs.')
     
     argparser.add_argument('--mode', '-m', type=str, default='train',
-                        choices=['train', 'eval'],
+                        choices=['train', 'eval', 'run'],
                         help='Mode to run the RL demo.')
     
     argparser.add_argument('--print_settings', action='store_true', default=False, 
@@ -116,6 +123,7 @@ def map_game_to_net(game):
     cnn = 'conv-net'
     
     _map = {'Pendulum-v0': dnn,
+            'CartPole-v0': dnn,
             'Breakout': cnn}
     
     try:
@@ -138,31 +146,6 @@ def print_args(args, logger=None):
                 logger.info("{0}: {1}".format(arg, getattr(args, arg)))
             else:
                 print("{0}: {1}".format(arg, getattr(args, arg)))
-
-
-def get_logger(mode, log_to_file=False):
-    """Get preconfigured logger for training and evaluation logs.
-    Args:
-        mode: ['train', 'eval'] The difference when chosing a mode is, that the
-                logging format differs for the different modes.
-        log_to_file: when False output to console only, when True also output 
-                to file that correspondes to the current mode.
-    """
-#    pdb.set_trace()
-    path_to_this_file = os.path.abspath(os.path.dirname(__file__))
-
-    path = os.path.join(path_to_this_file, "../log_cfg.json")
-
-    with open(path) as log_config_file:
-        log_config = json.loads(log_config_file.read())
-
-    logging_config.dictConfig(log_config)
-
-    logger_name = 'logger_'+mode if log_to_file==False else 'logger_'+mode+'_to_file' 
-
-    _logger = logging.getLogger(logger_name)
-        
-    return _logger
 
 
 class Logger:

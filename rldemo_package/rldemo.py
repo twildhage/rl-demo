@@ -14,6 +14,9 @@ from utils import get_argparser, print_args
 from utils import Logger, get_Manager
 
 def init():
+    
+    tfe.enable_eager_execution()
+    
     argparser = get_argparser()
     
     args = argparser.parse_args()
@@ -38,7 +41,7 @@ def main():
     
     manager = Manager(args.mode, args.algo, args.game, kwargs_agent)
     
-    manager.run(1,1)
+    manager.run(args.episodes, args.timesteps)
 
 if __name__ == '__main__':
     main()

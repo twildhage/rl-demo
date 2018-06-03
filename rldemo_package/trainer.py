@@ -23,16 +23,3 @@ class AbstractTrainer(AbstractRunner):
         
         super(AbstractTrainer, self).__init__(*args)
 
-#    @abc.abstractmethod
-#    def loss_op(self, target):
-#        pass
-#
-#
-#class BaseTrainer(AbstractTrainer):
-#
-#    def __init__(self, *args):
-#        
-#        super(AbstractTrainer, self).__init__(*args)
-#
-#    def loss_op(self, target):
-#        pass
