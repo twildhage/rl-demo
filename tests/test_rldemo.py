@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 #    MIT License
 #    
 #    Copyright (c) 2018 Timo Wildhage
@@ -23,41 +20,13 @@
 #    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 #    SOFTWARE.
 
-
 # Build-in modules
-from abc import ABC
-import abc
-from threading import Thread
+import pytest
 
 # Third party modules 
-import gym
+import tensorflow as tf
 
 # Custom modules
-from utils import get_Agent, get_agent, Logger
-
-
-class AbstractManager(ABC):
-    
-    @abc.abstractmethod
-    def __init__(self, mode, algo, game, kwargs_agent):
-        
-        self._algo = algo
-        
-        self._game = game
-        
-        self._mode = mode 
-        
-        self._kwargs_agent = kwargs_agent
-        
-        self.log = Logger.get_active_logger()
-
-    @abc.abstractmethod
-    def run(self, num_episodes, num_timesteps):
-        pass
-
-    @abc.abstractmethod
-    def summary(self):
-        pass
-    
-    
+from rldemo_package import rldemo
+from rldemo_package import utils
 
