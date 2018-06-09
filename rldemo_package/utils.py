@@ -177,6 +177,9 @@ def get_argparser():
     argparser.add_argument('--print_settings', action='store_true', default=False, 
                         help='Print current settings of all commandline arguments.')
     
+    argparser.add_argument('--render', action='store_true', default=False, 
+                        help='Render game play.')
+    
     argparser.add_argument('--share_weights', '-sw', action='store_true', default=False, 
                         help='Share weights between nets. Sharing details depend on the\
                         used reinforcement algorithm. For instance, in case of A3C\
@@ -187,6 +190,11 @@ def get_argparser():
     
     argparser.add_argument('--tensorboard', '-tb', action='store_true', default=False,
                         help='Activate tensorboard summaries. (Not yet supported)')
+    
+    argparser.add_argument('--threads', type=int, default=1,
+                        help='Set number of threads. Note: only has effect for parallel \
+                        algorithms like A3C.')
+    
     
     argparser.add_argument('--verbose', '-v', action='store_true', default=False,
                         help='Print live infos to the command line')

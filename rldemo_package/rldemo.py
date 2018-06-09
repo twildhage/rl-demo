@@ -59,7 +59,7 @@ def main():
     
     Manager = get_Manager(args.algo)
     
-    manager = Manager(args.mode, args.algo, args.game, kwargs_agent)
+    manager = Manager(args.mode, args.algo, args.game, args.render, args.threads, kwargs_agent)
     
     num_runners = manager.num_runners if args.mode=='train' else 1
     

@@ -35,14 +35,63 @@ class ConvBaseNet(keras.Model):
           name: Name of the module.
         """
         super(ConvBaseNet, self).__init__(name=name)
-        self.flatten = keras.layers.Flatten() 
-        self.dense1 = keras.layers.Dense(10)
-        self.dense2 = tf.layers.Dense(10)
-
+        
+        self.conv1 = keras.layers.Conv2D(24,
+                                        (7,7),
+                                        strides=(4, 4),
+                                        padding='valid',
+                                        data_format=None,
+                                        dilation_rate=(1, 1),
+                                        activation=keras.activations.relu,
+                                        use_bias=True,
+                                        kernel_initializer='glorot_uniform',
+                                        bias_initializer='zeros',
+                                        kernel_regularizer=None,
+                                        bias_regularizer=None,
+                                        activity_regularizer=None,
+                                        kernel_constraint=None,
+                                        bias_constraint=None)
+        self.conv2 = keras.layers.Conv2D(24,
+                                        (7,7),
+                                        strides=(4, 4),
+                                        padding='valid',
+                                        data_format=None,
+                                        dilation_rate=(1, 1),
+                                        activation=keras.activations.relu,
+                                        use_bias=True,
+                                        kernel_initializer='glorot_uniform',
+                                        bias_initializer='zeros',
+                                        kernel_regularizer=None,
+                                        bias_regularizer=None,
+                                        activity_regularizer=None,
+                                        kernel_constraint=None,
+                                        bias_constraint=None)
+        self.conv3 = keras.layers.Conv2D(24,
+                                        (7,7),
+                                        strides=(4, 4),
+                                        padding='valid',
+                                        data_format=None,
+                                        dilation_rate=(1, 1),
+                                        activation=keras.activations.relu,
+                                        use_bias=True,
+                                        kernel_initializer='glorot_uniform',
+                                        bias_initializer='zeros',
+                                        kernel_regularizer=None,
+                                        bias_regularizer=None,
+                                        activity_regularizer=None,
+                                        kernel_constraint=None,
+                                        bias_constraint=None)
+        self.flatten = keras.layers.Flatten()
+        self.dropout = keras.layers.Dropout(0.5)
+        
+        
     def call(self, input):
-        out = self.flatten(input)
-        out = self.dense1(out)
-        out = self.dense2(out)
+        
+        out = self.conv1(input)
+        out = self.conv2(out)
+        out = self.conv3(out)
+        out = self.flatten(out)
+        out = self.dropout(out)
         return out
 
 

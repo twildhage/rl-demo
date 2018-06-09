@@ -39,13 +39,17 @@ from utils import get_Agent, get_agent, Logger
 class AbstractManager(ABC):
     
     @abc.abstractmethod
-    def __init__(self, mode, algo, game, kwargs_agent):
+    def __init__(self, mode, algo, game, render, num_threads, kwargs_agent):
+        
+        self._mode = mode 
         
         self._algo = algo
         
         self._game = game
         
-        self._mode = mode 
+        self._render = render 
+        
+        self.num_threads = num_threads
         
         self._kwargs_agent = kwargs_agent
         
