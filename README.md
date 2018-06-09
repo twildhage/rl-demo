@@ -1,5 +1,7 @@
 # RL Demo
-
+***
+Note: _THIS PROJECT IS WORK IN PROGRESS. PLEASE DON'T EXPECT SOMETHING FINISHED AND BUGFREE_
+***
 Demonstration of reinforcement learning algorithms with selected OpenAI gym environments.
 
 The basic idea of the project is to have a simple command line client that can
